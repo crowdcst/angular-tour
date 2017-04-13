@@ -322,9 +322,9 @@
             if (!scope.ttContent) {
               return;
             }
-            if (scope.ttAnimation)
-              tourtip.fadeIn();
-            else {
+            if (scope.ttAnimation) {
+              tourtip.addClass('tour-anim-in');
+            } else {
               tourtip.css({ display: 'block' });
             }
             var targetElement = scope.ttElement ? angular.element(scope.ttElement) : element;
