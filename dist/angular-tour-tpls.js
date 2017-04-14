@@ -179,6 +179,9 @@
           attrs.$observe('tourtipContainerElement', function (val) {
             scope.ttContainerElement = val || tourConfig.containerElement;
           });
+          attrs.$observe('tourtipPopupContainer', function (val) {
+            scope.ttPopupContainer = val || null;
+          });
           attrs.$observe('tourtipMargin', function (val) {
             scope.ttMargin = parseInt(val, 10) || tourConfig.margin;
           });
@@ -330,7 +333,20 @@
             var targetElement = scope.ttElement ? angular.element(scope.ttElement) : element;
             if (targetElement == null || targetElement.length === 0)
               throw 'Target element could not be found. Selector: ' + scope.ttElement;
-            angular.element(scope.ttContainerElement).append(tourtip);
+
+            // 2 containers
+            //   A. ttContainerElement
+            //   B. ttPopupContainer (optional)
+            //
+            // ALWAYS
+            //    * append background to A
+            //    * append tourtip to B if it exists, otherwise, append it to A
+            //
+            // This allows us to append the background in one place and append
+            // the tourtip somewhere else
+            //
+            var appendTarget = scope.ttPopupContainer || scope.ttContainerElement;
+            angular.element(appendTarget).append(tourtip);
             var updatePosition = function () {
               var offsetElement = scope.ttContainerElement === 'body' ? undefined : angular.element(scope.ttContainerElement);
               var ttPosition = calculatePosition(targetElement, offsetElement);

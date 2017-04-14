@@ -117,6 +117,7 @@ There are additional attributes that allow you to customize each tour-tip.
 * `use-source-scope` **(Default: false)**: Option meaningful only when using virtual steps. When set to `false` - it will use as a target scope, scope of target's element for evaluating `on-show` and `on-proceed` callbacks. When set to `true`, target's scope will be scope when resides step itself. See example below for a better explanation if you still need one.
 
 * `tourtip-container-element` **(Default: "body")**: Element the tour tips are placed in. Especially practical when you have several scrollable containers you want to display tours in.
+* `tourtip-popup-container` **(Default: same as `tourtip-container-element`)**: Element the tour tips gets places in. This is useful when you want to append the tourtip to a different element than the background
 
 * `tourtip-title` **(Default: null)**: Title creates a separate h3 element to allow the separation of a title and it's content.
 
