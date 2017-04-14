@@ -61,7 +61,7 @@
           self.currentStep = nextIndex;
         }
         if (self.currentStep > -1)
-          self.showStepCallback();
+          self.showStepCallback(step);
         if (nextIndex >= steps.getCount()) {
           self.postTourCallback(true);
         }
@@ -127,13 +127,10 @@
               scope.$parent.$eval(attrs.postStep);
             }
           };
-          ctrl.showStepCallback = function () {
+          ctrl.showStepCallback = function (step) {
             if (tourConfig.backDrop) {
-              angular.element(tourConfig.containerElement).append(angular.element('<div class="tour-backdrop"></div>'));
-              $timeout(function () {
-                $('.tour-backdrop').remove();
-                angular.element('<div class="tour-backdrop"></div>').insertBefore('.tour-tip');
-              }, 1000);
+              $('.tour-backdrop').remove();
+              angular.element(step.ttContainerElement).append(angular.element('<div class="tour-backdrop"></div>'));
               backDrop = true;
             }
           };
