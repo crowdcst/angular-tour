@@ -16,7 +16,7 @@
   angular.module('tour/tour.tpl.html', []).run([
     '$templateCache',
     function ($templateCache) {
-      $templateCache.put('tour/tour.tpl.html', '<div class="tour-tip">\n' + '    <span class="tour-arrow tt-{{ ttPlacement }}" ng-hide="centered"></span>\n' + '    <div class="tour-content-wrapper">\n' + '        <h3 ng-bind="ttTitle"></h3>\n' + '       <p ng-if="ttContentUrl" ng-include="ttContentUrl"></p><p ng-if="ttContent" ng-bind="ttContent"></p>\n' + '        <a ng-click="proceed()" ng-bind="ttNextLabel" class="small button tour-next-tip"></a>\n' + '        <a ng-click="closeTour()" class="tour-close-tip">&times;</a>\n' + '    </div>\n' + '</div>\n' + '');
+      $templateCache.put('tour/tour.tpl.html', '<div class="tour-tip">\n' + '<span class="tour-arrow tt-{{ ttPlacement }}" ng-hide="centered"></span>\n' + '<div class="tour-content-wrapper">\n' + '<h3 ng-bind="ttTitle"></h3>\n' + '<p ng-if="ttContentUrl" ng-include="ttContentUrl"></p><p ng-if="ttContent" ng-bind="ttContent"></p>\n' + '<a ng-click="proceed()" ng-bind="ttNextLabel" class="btn btn-primary tour-next-tip m-t-1"></a>\n' + '<a ng-click="closeTour()" class="tour-close-tip">&times;</a>\n' + '    </div>\n' + '</div>\n' + '');
     }
   ]);
   angular.module('angular-tour.tour', []).constant('tourConfig', {
@@ -128,10 +128,21 @@
             }
           };
           ctrl.showStepCallback = function (step) {
+            let tourBackdrop = $('.tour-backdrop');
+            tourBackdrop.addClass('tour-anim-out');
+            
+            tourBackdrop.one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e) {
+              // code to execute after animation ends
+              tourBackdrop.remove()
+            });
+            
             if (tourConfig.backDrop) {
-              $('.tour-backdrop').remove();
-              angular.element(step.ttContainerElement).append(angular.element('<div class="tour-backdrop"></div>'));
-              backDrop = true;
+              if($('.tour-background').hasClass('tour-anim-out')){
+                return
+              } else {
+                angular.element(step.ttContainerElement).append(angular.element('<div class="tour-backdrop"></div>'));
+                backDrop = true;
+              }
             }
           };
           // update the current step in the view as well as in our controller
@@ -327,6 +338,13 @@
             }
             if (scope.ttAnimation) {
               tourtip.addClass('tour-anim-in');
+              
+              tourtip.one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e) {
+                // code to execute after animation ends
+                tourtip.addClass('tour-show');
+                tourtip.removeClass('tour-anim-in');
+              });
+
             } else {
               tourtip.css({ display: 'block' });
             }
@@ -369,8 +387,15 @@
             }
           }
           function hide() {
-            tourtip.detach();
-            angular.element($window).unbind('resize.' + scope.$id);
+            if(tourtip.hasClass('tour-show')){
+              tourtip.addClass('tour-anim-out');
+               tourtip.one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e) {
+                // code to execute after animation ends
+                tourtip.detach();
+                angular.element($window).unbind('resize.' + scope.$id);
+              });
+              
+            }
           }
           function focusActiveElement(el) {
             angular.element('.tour-element-active').removeClass('tour-element-active');
