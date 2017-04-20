@@ -65,7 +65,12 @@
         if (nextIndex >= steps.getCount()) {
           self.postTourCallback(true);
         }
-        self.postStepCallback();
+        // don't call postStepCallback if the next step is the first
+        // step, we have completed step -1 which isn't a thing so don't
+        // fire this callback
+        if (nextIndex !== 0) {
+          self.postStepCallback();
+        }
       };
       self.addStep = function (step) {
         if (angular.isNumber(step.index) && !isNaN(step.index)) {
@@ -130,7 +135,11 @@
           ctrl.showStepCallback = function (step) {
             if (tourConfig.backDrop) {
               $('.tour-backdrop').remove();
-              angular.element(step.ttContainerElement).append(angular.element('<div class="tour-backdrop"></div>'));
+              // only do this if we have a `step` object, at the end of the tour
+              // there is no `step` object passed in here
+              if (step) {
+                angular.element(step.ttContainerElement).append(angular.element('<div class="tour-backdrop"></div>'));
+              }
               backDrop = true;
             }
           };
