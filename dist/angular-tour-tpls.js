@@ -16,7 +16,7 @@
   angular.module('tour/tour.tpl.html', []).run([
     '$templateCache',
     function ($templateCache) {
-      $templateCache.put('tour/tour.tpl.html', '<div class="tour-tip">\n' + '    <span class="tour-arrow tt-{{ ttPlacement }}" ng-hide="centered"></span>\n' + '    <div class="tour-content-wrapper">\n' + '        <h3 ng-bind="ttTitle"></h3>\n' + '        <p ng-bind="ttContent"></p>\n' + '        <a ng-click="proceed()" ng-bind="ttNextLabel" class="small button tour-next-tip"></a>\n' + '        <a ng-click="closeTour()" class="tour-close-tip">&times;</a>\n' + '    </div>\n' + '</div>\n' + '');
+      $templateCache.put('tour/tour.tpl.html', '<div class="tour-tip">\n' + '    <span class="tour-arrow tt-{{ ttPlacement }}" ng-hide="centered"></span>\n' + '    <div class="tour-content-wrapper">\n' + '        <h3 ng-bind="ttTitle"></h3>\n' + '       <p ng-if="ttContentUrl" ng-include="ttContentUrl"></p><p ng-if="ttContent" ng-bind="ttContent"></p>\n' + '        <a ng-click="proceed()" ng-bind="ttNextLabel" class="small button tour-next-tip"></a>\n' + '        <a ng-click="closeTour()" class="tour-close-tip">&times;</a>\n' + '    </div>\n' + '</div>\n' + '');
     }
   ]);
   angular.module('angular-tour.tour', []).constant('tourConfig', {
@@ -164,6 +164,9 @@
         link: function (scope, element, attrs, tourCtrl) {
           attrs.$observe('tourtip', function (val) {
             scope.ttContent = val;
+          });
+          attrs.$observe('tourtipUrl', function (val) {
+            scope.ttContentUrl = val;
           });
           //defaults: tourConfig.placement
           attrs.$observe('tourtipPlacement', function (val) {
@@ -319,7 +322,7 @@
             return ttPosition;
           }
           function show() {
-            if (!scope.ttContent) {
+            if (!(scope.ttContent || scope.ttContentUrl)) {
               return;
             }
             if (scope.ttAnimation) {

@@ -103,6 +103,7 @@ There are additional attributes that allow you to customize each tour-tip.
 <span tourtip="tip 1" tourtip-step="0"></span>
 <span tourtip="tip 3" tourtip-step="2"></span>
 ```
+* `tourtip-url`: Instead of supplying `tourtip` for the content of the tourtip you can provide this directive. The library will fetch this html content and insert this into the tourtip
 
 * `tourtip-next-label` **(Default: "Next")**: The text for the next button.
 
