@@ -65,7 +65,12 @@
         if (nextIndex >= steps.getCount()) {
           self.postTourCallback(true);
         }
-        self.postStepCallback();
+        // don't call postStepCallback if the next step is the first
+        // step, we have completed step -1 which isn't a thing so don't
+        // fire this callback
+        if (nextIndex !== 0) {
+          self.postStepCallback();
+        }
       };
       self.addStep = function (step) {
         if (angular.isNumber(step.index) && !isNaN(step.index)) {
