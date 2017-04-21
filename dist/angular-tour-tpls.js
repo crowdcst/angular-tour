@@ -145,7 +145,9 @@
               if($('.tour-background').hasClass('tour-anim-out')){
                 return
               } else {
-                angular.element(step.ttContainerElement).append(angular.element('<div class="tour-backdrop"></div>'));
+                if (step) {
+                  angular.element(step.ttContainerElement).append(angular.element('<div class="tour-backdrop"></div>'));
+                }
                 backDrop = true;
               }
             }
