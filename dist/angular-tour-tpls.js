@@ -16,7 +16,7 @@
   angular.module('tour/tour.tpl.html', []).run([
     '$templateCache',
     function ($templateCache) {
-      $templateCache.put('tour/tour.tpl.html', '<div class="tour-tip">\n' + '<span class="tour-arrow tt-{{ ttPlacement }}" ng-hide="centered"></span>\n' + '<div class="tour-content-wrapper">\n' + '<h3 ng-bind="ttTitle"></h3>\n' + '<p ng-if="ttContentUrl" ng-include="ttContentUrl"></p><p ng-if="ttContent" ng-bind="ttContent"></p>\n' + '<a ng-click="proceed()" ng-bind="ttNextLabel" ng-if="ttNextLabel" class="btn btn-primary tour-next-tip m-t-1"></a>\n' + '<a ng-click="closeTour()" class="tour-close-tip">&times;</a>\n' + '    </div>\n' + '</div>\n' + '');
+      $templateCache.put('tour/tour.tpl.html', '<div class="tour-tip">\n' + '<span class="tour-arrow tt-{{ ttPlacement }}" ng-hide="centered"></span>\n' + '<div class="tour-content-wrapper">\n' + '<h3 ng-bind="ttTitle"></h3>\n' + '<p ng-if="ttContentUrl" ng-include="ttContentUrl"></p><p ng-if="ttContent" ng-bind="ttContent"></p>\n' + '<a ng-click="proceed()" ng-bind="ttNextLabel" ng-if="!ttRemoveNext" class="btn btn-primary tour-next-tip m-t-1"></a>\n' + '<a ng-click="closeTour()" class="tour-close-tip">&times;</a>\n' + '    </div>\n' + '</div>\n' + '');
     }
   ]);
   angular.module('angular-tour.tour', []).constant('tourConfig', {
@@ -191,9 +191,11 @@
             scope.ttPlacement = (val || tourConfig.placement).toLowerCase().trim();
             scope.centered = scope.ttPlacement.indexOf('center') === 0;
           });
+          attrs.$observe('tourtipRemoveNext', function (val) {
+            scope.ttRemoveNext = (val === 'true')
+          });
           attrs.$observe('tourtipNextLabel', function (val) {
-            // tourtip-next-label can be falsy (empty string)
-            scope.ttNextLabel = typeof val === 'undefined' ? tourConfig.nextLabel : val;
+            scope.ttNextLabel = val || tourConfig.nextLabel;
           });
           attrs.$observe('tourtipContainerElement', function (val) {
             scope.ttContainerElement = val || tourConfig.containerElement;
