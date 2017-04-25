@@ -133,7 +133,7 @@
             }
           };
           ctrl.showStepCallback = function (step) {
-            let tourBackdrop = $('.tour-backdrop');
+            var tourBackdrop = $('.tour-backdrop');
             tourBackdrop.addClass('tour-anim-out');
             
             tourBackdrop.one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e) {
