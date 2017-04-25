@@ -105,7 +105,7 @@ There are additional attributes that allow you to customize each tour-tip.
 ```
 * `tourtip-url`: Instead of supplying `tourtip` for the content of the tourtip you can provide this directive. The library will fetch this html content and insert this into the tourtip
 
-* `tourtip-next-label` **(Default: "Next")**: The text for the next button.
+* `tourtip-next-label` **(Default: "Next")**: The text for the next button. Set to empty string '' to remove the next button
 
 * `tourtip-placement` **(Default: "top")**: Placement of the tour tip relative to the target element. can be top, right, left, bottom
 
