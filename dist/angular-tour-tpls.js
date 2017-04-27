@@ -134,10 +134,7 @@
           };
           ctrl.showStepCallback = function (step) {
             var tourBackdrop = $('.tour-backdrop');
-            tourBackdrop.addClass('tour-anim-out');
-            
-            tourBackdrop.one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e) {
-              // code to execute after animation ends
+            tourBackdrop.animate({opacity: 0}, 500, function(){
               tourBackdrop.remove()
             });
             
