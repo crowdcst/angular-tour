@@ -345,6 +345,7 @@
             }
             if (scope.ttAnimation) {
               tourtip.addClass('tour-anim-in');
+              tourtip.removeClass('tour-anim-out');
               
               tourtip.one('webkitAnimationEnd oanimationend msAnimationEnd animationend', function(e) {
                 // code to execute after animation ends
@@ -400,8 +401,7 @@
                 // code to execute after animation ends
                 tourtip.detach();
                 angular.element($window).unbind('resize.' + scope.$id);
-              });
-              
+              }); 
             }
           }
           function focusActiveElement(el) {
