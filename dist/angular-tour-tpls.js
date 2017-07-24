@@ -327,6 +327,14 @@
                 right: restrictRight
               };
               break;
+            case 'left-center':
+              var _left = position.left - containerLeft - ttWidth - scope.ttMargin + scope.offsetHorizontal;
+              ttPosition = {
+                top: (element[0].getBoundingClientRect().height - tourtip.height())/2,
+                left: _left > 0 ? _left : minimumLeft,
+                right: restrictRight
+              };
+              break;
             default:
               var _left = position.left - containerLeft + scope.offsetHorizontal;
               ttPosition = {
