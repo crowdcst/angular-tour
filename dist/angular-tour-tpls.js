@@ -204,10 +204,10 @@
             scope.ttMargin = parseInt(val, 10) || tourConfig.margin;
           });
           attrs.$observe('tourtipOffsetVertical', function (val) {
-            scope.offsetVertical = parseInt(val, 10) || 0;
+            scope.offsetVertical = parseInt(val, 10) || 10;
           });
           attrs.$observe('tourtipOffsetHorizontal', function (val) {
-            scope.offsetHorizontal = parseInt(val, 10) || 0;
+            scope.offsetHorizontal = 10;
           });
           //defaults: null
           attrs.$observe('onShow', function (val) {
@@ -266,7 +266,7 @@
             return targetScope;
           }
           function calculatePosition(element, container) {
-            var minimumLeft = 0;
+            var minimumLeft = 10;
             // minimum left position of tour tip
             var restrictRight;
             var ttPosition;
